@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://elite_scene01"]
+
+[ext_resource type="Script" path="res://scripts/enemies/elite.gd" id="1_elite"]
+[ext_resource type="PackedScene" path="res://scenes/pickups/xp_orb.tscn" id="2_xp"]
+[ext_resource type="PackedScene" path="res://scenes/combat/enemy_bullet.tscn" id="3_bullet"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_elite"]
+radius = 16.0
+
+[node name="Elite" type="CharacterBody2D"]
+process_mode = 1
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_elite")
+xp_orb_scene = ExtResource("2_xp")
+enemy_bullet_scene = ExtResource("3_bullet")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_elite")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.85, 0.72, 0.2, 1)
+polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)

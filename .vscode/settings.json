@@ -1,0 +1,11 @@
+{
+    "godotTools.editorPath.godot4": "/Applications/Godot.app/Contents/MacOS/Godot",
+    "files.exclude": {
+        "**/*.uid": true,
+        "**/*.import": true
+    },
+    "search.exclude": {
+        "**/*.uid": true,
+        "**/*.import": true
+    }
+}

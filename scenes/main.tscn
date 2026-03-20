@@ -1,0 +1,238 @@
+[gd_scene format=3 uid="uid://4nvccftx5ab5"]
+
+[ext_resource type="Script" uid="uid://idh6dn0r60yh" path="res://scripts/core/main.gd" id="1_main"]
+[ext_resource type="PackedScene" uid="uid://c8player00001" path="res://scenes/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://c8enemy000001" path="res://scenes/enemies/enemy.tscn" id="3_enemy"]
+[ext_resource type="PackedScene" uid="uid://boss_scene001" path="res://scenes/enemies/boss.tscn" id="4_boss"]
+[ext_resource type="PackedScene" uid="uid://elite_scene01" path="res://scenes/enemies/elite.tscn" id="5_elite"]
+
+[node name="Main" type="Node2D" unique_id=2016023875]
+script = ExtResource("1_main")
+upgrade_interval_sec = 10.0
+boss_interval_sec = 20.0
+elite_spawn_chance = 0.16
+enemy_scene = ExtResource("3_enemy")
+boss_scene = ExtResource("4_boss")
+elite_scene = ExtResource("5_elite")
+
+[node name="BG" type="Polygon2D" parent="." unique_id=659178525]
+z_index = -10
+color = Color(0.11, 0.12, 0.16, 1)
+polygon = PackedVector2Array(-3200, -3200, 3200, -3200, 3200, 3200, -3200, 3200)
+
+[node name="SpawnContainer" type="Node2D" parent="." unique_id=1220140459]
+process_mode = 1
+
+[node name="UpgradeTimer" type="Timer" parent="."]
+process_mode = 1
+wait_time = 10.0
+one_shot = true
+autostart = false
+
+[node name="BossTimer" type="Timer" parent="."]
+process_mode = 1
+wait_time = 20.0
+one_shot = false
+autostart = false
+
+[node name="Player" parent="." unique_id=1241092973 instance=ExtResource("2_player")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=771972204]
+layer = 10
+
+[node name="UI" type="Control" parent="CanvasLayer" unique_id=1677737835]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="CanvasLayer/UI" unique_id=625436422]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="CanvasLayer/UI/Margin" unique_id=1914578122]
+layout_mode = 2
+
+[node name="HP" type="Label" parent="CanvasLayer/UI/Margin/VBox" unique_id=113789384]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "生命: 100 / 100"
+
+[node name="Level" type="Label" parent="CanvasLayer/UI/Margin/VBox" unique_id=1357218098]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "等级: 1"
+
+[node name="Time" type="Label" parent="CanvasLayer/UI/Margin/VBox" unique_id=745602468]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "游戏时间: 0 秒"
+
+[node name="Kills" type="Label" parent="CanvasLayer/UI/Margin/VBox" unique_id=640929918]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "击败: 0"
+
+[node name="Score" type="Label" parent="CanvasLayer/UI/Margin/VBox" unique_id=527945947]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "积分: 0"
+
+[node name="Help" type="Label" parent="CanvasLayer/UI/Margin/VBox" unique_id=1252968789]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "WASD 移动 · R 重开 · Esc 退出"
+
+[node name="GameOver" type="Control" parent="CanvasLayer" unique_id=683047971]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/GameOver" unique_id=1015768582]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="Panel" type="PanelContainer" parent="CanvasLayer/GameOver" unique_id=2015182700]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -140.0
+offset_right = 200.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="CanvasLayer/GameOver/Panel" unique_id=95369016]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="CanvasLayer/GameOver/Panel/VBox" unique_id=1363700756]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "游戏结束"
+horizontal_alignment = 1
+
+[node name="TimeValue" type="Label" parent="CanvasLayer/GameOver/Panel/VBox" unique_id=1496587833]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "0 秒"
+horizontal_alignment = 1
+
+[node name="KillsValue" type="Label" parent="CanvasLayer/GameOver/Panel/VBox" unique_id=398866205]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "0"
+horizontal_alignment = 1
+
+[node name="ScoreValue" type="Label" parent="CanvasLayer/GameOver/Panel/VBox" unique_id=362141913]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "积分: 0"
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="CanvasLayer/GameOver/Panel/VBox" unique_id=1878647561]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "按 R 重新开始"
+horizontal_alignment = 1
+
+[node name="UpgradeLayer" type="CanvasLayer" parent="." unique_id=7249169]
+layer = 12
+
+[node name="UpgradePicker" type="Control" parent="UpgradeLayer" unique_id=2045453433]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="UpgradeLayer/UpgradePicker" unique_id=426775837]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.55)
+
+[node name="Panel" type="PanelContainer" parent="UpgradeLayer/UpgradePicker" unique_id=1504399304]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -420.0
+offset_top = -160.0
+offset_right = 420.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="UpgradeLayer/UpgradePicker/Panel" unique_id=578006338]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="UpgradeLayer/UpgradePicker/Panel/VBox" unique_id=1479593705]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "选择一项强化"
+horizontal_alignment = 1
+
+[node name="HBox" type="HBoxContainer" parent="UpgradeLayer/UpgradePicker/Panel/VBox" unique_id=110681729]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Btn1" type="Button" parent="UpgradeLayer/UpgradePicker/Panel/VBox/HBox" unique_id=2071130998]
+custom_minimum_size = Vector2(220, 120)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "选项1"
+autowrap_mode = 2
+
+[node name="Btn2" type="Button" parent="UpgradeLayer/UpgradePicker/Panel/VBox/HBox" unique_id=17799108]
+custom_minimum_size = Vector2(220, 120)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "选项2"
+autowrap_mode = 2
+
+[node name="Btn3" type="Button" parent="UpgradeLayer/UpgradePicker/Panel/VBox/HBox" unique_id=217424447]
+custom_minimum_size = Vector2(220, 120)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "选项3"
+autowrap_mode = 2
+
+[node name="PickHint" type="Label" parent="UpgradeLayer/UpgradePicker/Panel/VBox" unique_id=2030989015]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "点选一项后游戏继续"
+horizontal_alignment = 1
