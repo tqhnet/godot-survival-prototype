@@ -52,6 +52,8 @@ test/
 │       └── upgrade_definitions.gd   # 强化 id、文案、随机池（无场景）
 │
 └── docs/                  # 给人与 AI 阅读的说明（本目录）
+	├── assets/
+	│   └── preview.png    # README 等引用的画面预览图（可替换）
 	├── DIRECTORY.md       # 本文件：目录树
 	└── GAMEPLAY.md        # 玩法流程与扩展点
 ```
